@@ -21,6 +21,9 @@ import {
   XCircle,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import SideBar from "../components/SideBar";
+import Header from "../components/Header";
+
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -305,210 +308,209 @@ const StatisticsDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <BarChart3 className="h-6 w-6 text-blue-600" />
-                  <h1 className="text-2xl font-bold text-gray-900">
-                    Collisions Data
-                  </h1>
+    <div className="flex h-screen bg-gray-50">
+      <SideBar activeItem={activeItem} setActiveItem={setActiveItem} />
+
+      <div className="flex-1 flex flex-col">
+        <Header />
+
+        <div className="w-full mx-auto px-2 sm:px-6 lg:px-2 py-2">
+          <div className="bg-white rounded-lg shadow">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2">
+                    <BarChart3 className="h-6 w-6 text-blue-600" />
+                    <h1 className="text-2xl font-bold text-gray-900">
+                      Collisions Data
+                    </h1>
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    All Records:{" "}
+                    <span className="font-medium text-gray-900">
+                      {totalRecords.toLocaleString()}
+                    </span>
+                  </div>
                 </div>
-                <div className="text-sm text-gray-500">
-                  All Records:{" "}
-                  <span className="font-medium text-gray-900">
-                    {totalRecords.toLocaleString()}
-                  </span>
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={handleRefresh}
+                    className="bg-gray-100 text-gray-700 px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors"
+                  >
+                    Refresh
+                  </button>
+                  <button
+                    onClick={onAddNew}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                  >
+                    <Plus className="h-4 w-4" />
+                    <span>Add new record</span>
+                  </button>
                 </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={handleRefresh}
-                  className="bg-gray-100 text-gray-700 px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors"
-                >
-                  Refresh
-                </button>
-                <button
-                  onClick={onAddNew}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors flex items-center space-x-2"
-                >
-                  <Plus className="h-4 w-4" />
-                  <span>Add new record</span>
-                </button>
-                <button
-                  onClick={onLogout}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors flex items-center space-x-2"
-                >
-                  <LogOut className="h-4 w-4" />
-                  <span>Logout</span>
-                </button>
               </div>
             </div>
-          </div>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Statistic
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Label
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Year
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Code
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Month
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Unit
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Value
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {currentRecords.map((record) => (
-                  <tr key={record.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.statistic}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.label}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.year}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.code}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.month}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.unit}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.value}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <div className="flex items-center space-x-2">
-                        <button
-                          onClick={() => onEdit(record)}
-                          className="text-blue-600 hover:text-blue-700 p-1 rounded transition-colors"
-                          title="Edit record"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteClick(record)}
-                          className="text-red-600 hover:text-red-700 p-1 rounded transition-colors"
-                          title="Delete record"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </td>
+            <div className="w-full">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Statistic
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Label
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Year
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Code
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Month
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Unit
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Value
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="px-6 py-4 flex items-center justify-between border-t border-gray-200">
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-700">Rows per page</span>
-              <select className="border border-gray-300 rounded px-2 py-1 text-sm">
-                <option>15</option>
-                <option>25</option>
-                <option>50</option>
-              </select>
-              <span className="text-sm text-gray-700">
-                {startIndex + 1}-{Math.min(endIndex, totalRecords)} of{" "}
-                {totalRecords}
-              </span>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {currentRecords.map((record) => (
+                    <tr key={record.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {record.statistic}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {record.label}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {record.year}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {record.code}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {record.month}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {record.unit}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {record.value}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => onEdit(record)}
+                            className="text-blue-600 hover:text-blue-700 p-1 rounded transition-colors"
+                            title="Edit record"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteClick(record)}
+                            className="text-red-600 hover:text-red-700 p-1 rounded transition-colors"
+                            title="Delete record"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                disabled={currentPage === 1}
-                className="p-2 rounded border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
+            <div className="px-6 py-4 flex items-center justify-between border-t border-gray-200">
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-700">Rows per page</span>
+                <select className="border border-gray-300 rounded px-2 py-1 text-sm">
+                  <option>15</option>
+                  <option>25</option>
+                  <option>50</option>
+                </select>
+                <span className="text-sm text-gray-700">
+                  {startIndex + 1}-{Math.min(endIndex, totalRecords)} of{" "}
+                  {totalRecords}
+                </span>
+              </div>
 
-              {[...Array(Math.min(5, totalPages))].map((_, index) => {
-                const pageNum =
-                  currentPage <= 3 ? index + 1 : currentPage - 2 + index;
-                if (pageNum > totalPages) return null;
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="p-2 rounded border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
 
-                return (
-                  <button
-                    key={pageNum}
-                    onClick={() => setCurrentPage(pageNum)}
-                    className={`px-3 py-1 rounded text-sm ${
-                      currentPage === pageNum
-                        ? "bg-blue-600 text-white"
-                        : "border border-gray-300 hover:bg-gray-50"
-                    }`}
-                  >
-                    {pageNum}
-                  </button>
-                );
-              })}
+                {[...Array(Math.min(5, totalPages))].map((_, index) => {
+                  const pageNum =
+                    currentPage <= 3 ? index + 1 : currentPage - 2 + index;
+                  if (pageNum > totalPages) return null;
 
-              {totalPages > 5 && currentPage < totalPages - 2 && (
-                <>
-                  <span className="text-gray-500">...</span>
-                  <button
-                    onClick={() => setCurrentPage(totalPages)}
-                    className="px-3 py-1 rounded text-sm border border-gray-300 hover:bg-gray-50"
-                  >
-                    {totalPages}
-                  </button>
-                </>
-              )}
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => setCurrentPage(pageNum)}
+                      className={`px-3 py-1 rounded text-sm ${
+                        currentPage === pageNum
+                          ? "bg-blue-600 text-white"
+                          : "border border-gray-300 hover:bg-gray-50"
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
 
-              <button
-                onClick={() =>
-                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-                className="p-2 rounded border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
+                {totalPages > 5 && currentPage < totalPages - 2 && (
+                  <>
+                    <span className="text-gray-500">...</span>
+                    <button
+                      onClick={() => setCurrentPage(totalPages)}
+                      className="px-3 py-1 rounded text-sm border border-gray-300 hover:bg-gray-50"
+                    >
+                      {totalPages}
+                    </button>
+                  </>
+                )}
+
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="p-2 rounded border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
+        <ConfirmDeleteModal
+          isOpen={showDeleteModal}
+          onClose={handleDeleteCancel}
+          onConfirm={handleDeleteConfirm}
+          recordData={deleteRecordData}
+        />
+
+        <StatusModal
+          isOpen={showStatusModal}
+          onClose={() => setShowStatusModal(false)}
+          type={statusModalData.type}
+          message={statusModalData.message}
+        />
       </div>
-
-      <ConfirmDeleteModal
-        isOpen={showDeleteModal}
-        onClose={handleDeleteCancel}
-        onConfirm={handleDeleteConfirm}
-        recordData={deleteRecordData}
-      />
-
-      <StatusModal
-        isOpen={showStatusModal}
-        onClose={() => setShowStatusModal(false)}
-        type={statusModalData.type}
-        message={statusModalData.message}
-      />
     </div>
   );
 };
